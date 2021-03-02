@@ -21,7 +21,12 @@
                 "publish",
                 "${workspaceFolder}/src/AutoStateTransitions/AutoStateTransitions.csproj",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "/consoleloggerparameters:NoSummary",
+                "--runtime",
+                "windows",
+                "--output",
+                "bin/release/netcoreapp3.0/publish",
+                "--self-contained",
             ],
             "problemMatcher": "$msCompile"
         },

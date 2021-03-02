@@ -1,0 +1,5 @@
+{
+  "appService.preDeployTask": "publish",
+  "appService.deploySubpath": "bin\\Release\\netcoreapp3.0\\publish",
+  "appService.defaultWebAppToDeploy": "/subscriptions/6ec2a6c7-53f0-4a4d-8c3a-71c3c4e57dd1/resourceGroups/rg-dev-ADOStateAutomation/providers/Microsoft.Web/sites/netrics-dev-adoStateTransitionsAutomation"
+}
