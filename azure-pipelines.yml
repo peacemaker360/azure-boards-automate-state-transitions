@@ -22,6 +22,7 @@ steps:
 #    restoreSolution: '$(solution)'
 
 - task: DotNetCoreCLI@2
+  displayName: Build
   inputs:
     command: 'build'
     projects: '**/*.csproj'
@@ -45,7 +46,7 @@ steps:
   inputs:
     command: publish
     publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory) --self-contained -r win-x64'
+    arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory) --self-contained -r win-x32'
     zipAfterPublish: True
 
 
