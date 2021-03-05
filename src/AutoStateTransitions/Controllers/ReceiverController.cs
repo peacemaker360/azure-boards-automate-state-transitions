@@ -51,8 +51,8 @@ namespace AutoStateTransitions.Controllers
             PayloadViewModel vm = BuildPayloadViewModel(payload);
 
             //make sure pat is not empty, if it is, pull from appsettings
-            //vm.pat = _appSettings.Value.PersonalAccessToken;
-            vm.pat = ConfigurationManager.AppSettings["PersonalAccessToken"];
+            vm.pat = _appSettings.Value.PersonalAccessToken;
+            //vm.pat = ConfigurationManager.AppSettings["PersonalAccessToken"];
             if (String.IsNullOrEmpty(vm.pat)) return new StandardResponseObjectResult("Error reading PersonalAccessToken(PAT) ", StatusCodes.Status500InternalServerError);
 
             //if the event type is something other the updated, then lets just return an ok
