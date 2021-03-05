@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,7 +49,8 @@ namespace AutoStateTransitions.Controllers
             PayloadViewModel vm = BuildPayloadViewModel(payload);
 
             //make sure pat is not empty, if it is, pull from appsettings
-            vm.pat = _appSettings.Value.PersonalAccessToken;
+            //vm.pat = _appSettings.Value.PersonalAccessToken;
+            vm.pat = ConfigurationManager.AppSettings["PersonalAccessToken"];
 
             //if the event type is something other the updated, then lets just return an ok
             if (vm.eventType != "workitem.updated") return new OkResult();
