@@ -29,8 +29,9 @@ namespace AutoStateTransitions.Repos
 
         public async Task<WorkItem> GetWorkItem(VssConnection connection, int id)
         {
-            using (WorkItemTrackingHttpClient client = connection.GetClient<WorkItemTrackingHttpClient>())
-            {
+            var client = connection.GetClient<WorkItemTrackingHttpClient>();
+            //using (WorkItemTrackingHttpClient client = connection.GetClient<WorkItemTrackingHttpClient>())
+            //{
 
                 try
                 {
@@ -41,7 +42,7 @@ namespace AutoStateTransitions.Repos
                 {
                     return null;
                 }
-            }
+            //}
         }
 
         public async Task<List<WorkItem>> ListChildWorkItemsForParent(VssConnection connection, WorkItem parentWorkItem)

@@ -23,6 +23,7 @@ using AutoStateTransitions.Misc;
 using System.Security.Cryptography.X509Certificates;
 using AutoStateTransitions.Repos.Interfaces;
 using System.Text.Json;
+using Microsoft.TeamFoundation.WorkItemTracking.WebApi;
 
 namespace AutoStateTransitions.Controllers
 {
@@ -52,6 +53,7 @@ namespace AutoStateTransitions.Controllers
             //make sure pat is not empty, if it is, pull from appsettings
             //vm.pat = _appSettings.Value.PersonalAccessToken;
             vm.pat = ConfigurationManager.AppSettings["PersonalAccessToken"];
+            if (String.IsNullOrEmpty(vm.pat)) return new StandardResponseObjectResult("Error reading PersonalAccessToken(PAT) ", StatusCodes.Status500InternalServerError);
 
             //if the event type is something other the updated, then lets just return an ok
             if (vm.eventType != "workitem.updated") return new OkResult();
@@ -75,6 +77,8 @@ namespace AutoStateTransitions.Controllers
             if (parentRelation == null) return new OkResult();
 
             Int32 parentId = _helper.GetWorkItemIdFromUrl(parentRelation.Url);
+
+
             WorkItem parentWorkItem = await _workItemRepo.GetWorkItem(vssConnection, parentId);
 
             if (parentWorkItem == null) return new StandardResponseObjectResult("Error loading parent work item '" + parentId.ToString() + "'", StatusCodes.Status500InternalServerError);
