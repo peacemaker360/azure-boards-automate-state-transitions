@@ -22,6 +22,7 @@ using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
 using AutoStateTransitions.Misc;
 using System.Security.Cryptography.X509Certificates;
 using AutoStateTransitions.Repos.Interfaces;
+using System.Text.Json;
 
 namespace AutoStateTransitions.Controllers
 {
@@ -120,17 +121,24 @@ namespace AutoStateTransitions.Controllers
         {
             PayloadViewModel vm = new PayloadViewModel();
 
+            //using var jsonDoc = JsonDocument.Parse(body);
+            //var root = jsonDoc.RootElement;
+
+            //var WorkItem = JsonSerializer.Deserialize<WorkItem>(body);
+
+
+            //string url = WorkItem.Url;
             string url = body["resource"]["url"] == null ? null : body["resource"]["url"].ToString();
             string org = GetOrganization(url);
 
-            vm.workItemId = body["resource"]["workItemId"] == null ? -1 : Convert.ToInt32(body["resource"]["workItemId"].ToString());
-            vm.workItemType = body["resource"]["revision"]["fields"]["System.WorkItemType"] == null ? null : body["resource"]["revision"]["fields"]["System.WorkItemType"].ToString();
+            vm.workItemId = body["resource"]["workItemId"] == null ? -1 : Convert.ToInt32(body["resource"]["workItemId"].ToString());//(int)WorkItem.Id;
+            vm.workItemType = body["resource"]["revision"]["fields"]["System.WorkItemType"] == null ? null : body["resource"]["revision"]["fields"]["System.WorkItemType"].ToString();//(string)WorkItem.Fields["System.WorkItemType"];
             vm.eventType = body["eventType"] == null ? null : body["eventType"].ToString();
-            vm.rev = body["resource"]["rev"] == null ? -1 : Convert.ToInt32(body["resource"]["rev"].ToString());
-            vm.url = body["resource"]["url"] == null ? null : body["resource"]["url"].ToString();
-            vm.organization = org;
-            vm.teamProject = body["resource"]["fields"]["System.AreaPath"] == null ? null : body["resource"]["fields"]["System.AreaPath"].ToString();
-            vm.state = body["resource"]["fields"]["System.State"]["newValue"] == null ? null : body["resource"]["fields"]["System.State"]["newValue"].ToString();
+            vm.rev = vm.rev = body["resource"]["rev"] == null ? -1 : Convert.ToInt32(body["resource"]["rev"].ToString()); //(int)WorkItem.Rev; //
+            vm.url = body["resource"]["url"] == null ? null : body["resource"]["url"].ToString(); //WorkItem.Url; //
+            vm.organization = org; 
+            vm.teamProject = body["resource"]["fields"]["System.AreaPath"] == null ? null : body["resource"]["fields"]["System.AreaPath"].ToString(); //(string)WorkItem.Fields["System.AreaPath"]; //
+            vm.state = body["resource"]["fields"]["System.State"]["newValue"] == null ? null : body["resource"]["fields"]["System.State"]["newValue"].ToString(); //(string)WorkItem.Fields["System.State"]; //
 
             return vm;
         }

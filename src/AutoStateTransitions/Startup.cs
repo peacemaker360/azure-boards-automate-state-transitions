@@ -6,6 +6,7 @@ using AutoStateTransitions.Repos.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,12 +41,15 @@ namespace AutoStateTransitions
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Azure DevOps - Automate State Transitions", Version = "v1" });
             });
 
+
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
             services.AddTransient<IHelper, Helper>();
 
             services.AddTransient<IWorkItemRepo, WorkItemRepo>();
             services.AddTransient<IRulesRepo, RulesRepo>();
-
+            services.AddHttpClient<IRulesRepo, RulesRepo>();
+            
+            services.AddControllers().AddNewtonsoftJson();
             services.AddControllersWithViews();
             services.AddHealthChecks();
 
